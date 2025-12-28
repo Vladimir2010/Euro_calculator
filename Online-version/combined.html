@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресто Калкулатор (ЕВРО/ЛЕВА)</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .calculator-container {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f7;
+            border-radius: 10px;
+        }
+
+        .calculator-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .calculator-header .logo {
+            position: absolute;
+            left: 0;
+            width: 150px;
+            height: auto;
+        }
+
+        .calculator-header h1 {
+            font-size: 32px;
+            text-align: center;
+            flex: 1;
+            margin: 0;
+        }
+
+        .main-calculator label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .main-calculator input {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+        }
+
+        .main-calculator button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .additional-calculators {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .calc-col {
+            flex: 1;
+            background-color: #e6e6e6;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .calc-col h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .calc-col input {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #999;
+        }
+
+        .calc-col button {
+            width: 100%;
+            padding: 8px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .calculator-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .container {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px 0;
+            border-radius: 8px;
+            border: 2px solid #cccccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357ac8;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="calculator-container">
+    <!-- Header с лого и заглавие -->
+    <div class="calculator-header">
+        <img src="logo-d-d.jpg" alt="Лого" class="logo">
+        <h1>ЕВРО КАЛКУЛАТОР</h1>
+    </div>
+
+    <!-- Оригинален калкулатор -->
+    <div class="main-calculator">
+        <label>Дължима сума (ЕВРО):</label>
+        <input type="text" id="input_due" value="0.00">
+
+        <label>Платено в ЛЕВА:</label>
+        <input type="text" id="input_paid_lev" value="0.00">
+
+        <label>Платено в ЕВРО:</label>
+        <input type="text" id="input_paid_eur" value="0.00">
+
+        <button id="btn_calc">Изчисли ресто</button>
+        <div id="label_result">Ресто в ЕВРО: 0.00</div>
+    </div>
+
+    <!-- Нови калкулатори в две колони -->
+    <div class="additional-calculators">
+        <div class="calc-col">
+            <h3>Евро → Лева</h3>
+            <input type="text" id="input_eur_to_lev" placeholder="Сума в евро">
+            <button id="btn_eur_to_lev">Изчисли в лева</button>
+            <div id="result_eur_to_lev"></div>
+        </div>
+        <div class="calc-col">
+            <h3>Лева → Евро</h3>
+            <input type="text" id="input_lev_to_eur" placeholder="Сума в лева">
+            <button id="btn_lev_to_eur">Изчисли в евро</button>
+            <div id="result_lev_to_eur"></div>
+        </div>
+    </div>
+
+    <!-- Footer / авторски права -->
+    <div class="calculator-footer">
+        <p>© 2025 Профинанс Д и Д ЕООД. Всички права запазени.</p>
+    </div>
+
+</div>
+
+<script>
+    function parseAmount(value) {
+        value = value.replace(',', '.').trim();
+        let num = parseFloat(value);
+        return isNaN(num) ? 0.0 : num;
+    }
+
+    function calculateChange() {
+        let due = parseAmount(document.getElementById('due').value);
+        let paid_lev = parseAmount(document.getElementById('paid_lev').value);
+        let paid_eur = parseAmount(document.getElementById('paid_eur').value);
+
+        let rate = 1.95583;
+        let total_paid_eur = paid_eur + (paid_lev / rate);
+        let change_eur = total_paid_eur - due;
+
+        document.getElementById('due').value = due.toFixed(2);
+        document.getElementById('paid_lev').value = paid_lev.toFixed(2);
+        document.getElementById('paid_eur').value = paid_eur.toFixed(2);
+
+        document.getElementById('result').textContent = `Ресто в ЕВРО: ${change_eur.toFixed(2)}`;
+    }
+
+    const input_due = document.getElementById('input_due');
+    const input_paid_lev = document.getElementById('input_paid_lev');
+    const input_paid_eur = document.getElementById('input_paid_eur');
+    const btn_calc = document.getElementById('btn_calc');
+    const label_result = document.getElementById('label_result');
+
+    function parseAmount(text) {
+        if (!text) return 0;
+        text = text.replace(',', '.');
+        return parseFloat(text) || 0;
+    }
+
+    btn_calc.addEventListener('click', () => {
+        const due = parseAmount(input_due.value);
+        const paid_lev = parseAmount(input_paid_lev.value);
+        const paid_eur = parseAmount(input_paid_eur.value);
+        const rate = 1.95583;
+        const total_paid_eur = paid_eur + (paid_lev / rate);
+        const change_eur = total_paid_eur - due;
+        label_result.innerText = `Ресто в ЕВРО: ${change_eur.toFixed(2)}`;
+    });
+
+    // Евро -> Лева
+    const btnEurToLev = document.getElementById('btn_eur_to_lev');
+    const inputEurToLev = document.getElementById('input_eur_to_lev');
+    const resultEurToLev = document.getElementById('result_eur_to_lev');
+
+    btnEurToLev.addEventListener('click', () => {
+        const eur = parseAmount(inputEurToLev.value);
+        const lev = eur * 1.95583;
+        resultEurToLev.innerText = `${lev.toFixed(2)} лева`;
+    });
+
+    // Лева -> Евро
+    const btnLevToEur = document.getElementById('btn_lev_to_eur');
+    const inputLevToEur = document.getElementById('input_lev_to_eur');
+    const resultLevToEur = document.getElementById('result_lev_to_eur');
+
+    btnLevToEur.addEventListener('click', () => {
+        const lev = parseAmount(inputLevToEur.value);
+        const eur = lev / 1.95583;
+        resultLevToEur.innerText = `${eur.toFixed(2)} евро`;
+    });
+</script>
+
+</body>
+</html>

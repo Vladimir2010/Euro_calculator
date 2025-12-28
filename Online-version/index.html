@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресто Калкулатор (ЕВРО/ЛЕВА)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+<div class="container">
+    <h1>Ресто Калкулатор (ЕВРО/ЛЕВА)</h1>
+    <label for="due">Дължима сума (ЕВРО):</label>
+    <input type="text" id="due" value="0.00">
+
+    <label for="paid_lev">Платено в ЛЕВА:</label>
+    <input type="text" id="paid_lev" value="0.00">
+
+    <label for="paid_eur">Платено в ЕВРО:</label>
+    <input type="text" id="paid_eur" value="0.00">
+
+    <button onclick="calculateChange()">Изчисли ресто</button>
+    <div class="result" id="result">Ресто в ЕВРО: 0.00</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
