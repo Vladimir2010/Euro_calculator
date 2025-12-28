@@ -1,21 +1,45 @@
-function parseAmount(value) {
-    value = value.replace(',', '.').trim();
-    let num = parseFloat(value);
-    return isNaN(num) ? 0.0 : num;
-}
+    // Универсална функция за парсване на числа
+    function parseAmount(value) {
+        value = value.replace(',', '.').trim();
+        let num = parseFloat(value);
+        return isNaN(num) ? 0.0 : num;
+    }
 
-function calculateChange() {
-    let due = parseAmount(document.getElementById('due').value);
-    let paid_lev = parseAmount(document.getElementById('paid_lev').value);
-    let paid_eur = parseAmount(document.getElementById('paid_eur').value);
+    // Основен калкулатор: Ресто в евро
+    const input_due = document.getElementById('input_due');
+    const input_paid_lev = document.getElementById('input_paid_lev');
+    const input_paid_eur = document.getElementById('input_paid_eur');
+    const btn_calc = document.getElementById('btn_calc');
+    const label_result = document.getElementById('label_result');
 
-    let rate = 1.95583;
-    let total_paid_eur = paid_eur + (paid_lev / rate);
-    let change_eur = total_paid_eur - due;
+    btn_calc.addEventListener('click', () => {
+        const due = parseAmount(input_due.value);
+        const paid_lev = parseAmount(input_paid_lev.value);
+        const paid_eur = parseAmount(input_paid_eur.value);
+        const rate = 1.95583;
+        const total_paid_eur = paid_eur + (paid_lev / rate);
+        const change_eur = total_paid_eur - due;
+        label_result.innerText = `Ресто в ЕВРО: ${change_eur.toFixed(2)}`;
+    });
 
-    document.getElementById('due').value = due.toFixed(2);
-    document.getElementById('paid_lev').value = paid_lev.toFixed(2);
-    document.getElementById('paid_eur').value = paid_eur.toFixed(2);
+    // Евро → Лева
+    const btnEurToLev = document.getElementById('btn_eur_to_lev');
+    const inputEurToLev = document.getElementById('input_eur_to_lev');
+    const resultEurToLev = document.getElementById('result_eur_to_lev');
 
-    document.getElementById('result').textContent = `Ресто в ЕВРО: ${change_eur.toFixed(2)}`;
-}
+    btnEurToLev.addEventListener('click', () => {
+        const eur = parseAmount(inputEurToLev.value);
+        const lev = eur * 1.95583;
+        resultEurToLev.innerText = `${lev.toFixed(2)} лева`;
+    });
+
+    // Лева → Евро
+    const btnLevToEur = document.getElementById('btn_lev_to_eur');
+    const inputLevToEur = document.getElementById('input_lev_to_eur');
+    const resultLevToEur = document.getElementById('result_lev_to_eur');
+
+    btnLevToEur.addEventListener('click', () => {
+        const lev = parseAmount(inputLevToEur.value);
+        const eur = lev / 1.95583;
+        resultLevToEur.innerText = `${eur.toFixed(2)} евро`;
+    });
