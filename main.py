@@ -3,6 +3,23 @@ from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButto
 from PyQt6.QtGui import QDoubleValidator, QIcon
 
 
+class ClearableLineEdit(QLineEdit):
+    def __init__(self, default="0.00"):
+        super().__init__()
+        self.default = default
+        self.setText(self.default)
+
+    def focusInEvent(self, event):
+        if self.text() == self.default:
+            self.clear()
+        super().focusInEvent(event)
+
+    def focusOutEvent(self, event):
+        if self.text().strip() == "":
+            self.setText(self.default)
+        super().focusOutEvent(event)
+
+
 class EuroChangeCalculator(QWidget):
     def __init__(self):
         super().__init__()
@@ -46,15 +63,18 @@ class EuroChangeCalculator(QWidget):
         # Inputs
         # (Validator removed) We'll normalize inputs on calculation to accept both '.' and ','.
 
-        self.input_due = QLineEdit()
+        # self.input_due = QLineEdit
+        self.input_due = ClearableLineEdit()
         self.input_due.setText("0.00")
         self.input_due.editingFinished.connect(lambda: self.reset_if_empty(self.input_due))
 
-        self.input_paid_lev = QLineEdit()
+        # self.input_paid_lev = QLineEdit()
+        self.input_paid_lev = ClearableLineEdit()
         self.input_paid_lev.setText("0.00")
         self.input_paid_lev.editingFinished.connect(lambda: self.reset_if_empty(self.input_paid_lev))
 
-        self.input_paid_eur = QLineEdit()
+        # self.input_paid_eur = QLineEdit()
+        self.input_paid_eur = ClearableLineEdit()
         self.input_paid_eur.setText("0.00")
 
         # helper to parse amounts (accepts both comma and dot). Empty/invalid -> 0.0

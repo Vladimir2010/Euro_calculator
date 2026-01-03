@@ -43,3 +43,22 @@
         const eur = lev / 1.95583;
         resultLevToEur.innerText = `${eur.toFixed(2)} евро`;
     });
+
+    function clearOnFocus(element) {
+    element.addEventListener('focus', function() {
+        if (this.value === '' || this.value === '0.00') {
+            this.value = '';
+        }
+    });
+    element.addEventListener('blur', function() {
+        if (this.value === '') {
+            this.value = '0.00';
+        }
+    });
+}
+
+    clearOnFocus(document.getElementById('input_due'));
+    clearOnFocus(document.getElementById('input_paid_lev'));
+    clearOnFocus(document.getElementById('input_paid_eur'));
+    clearOnFocus(document.getElementById('input_eur_to_lev'));
+    clearOnFocus(document.getElementById('input_lev_to_eur'));

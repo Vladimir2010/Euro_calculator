@@ -3,26 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ресто Калкулатор (ЕВРО/ЛЕВА)</title>
+    <title>ЕВРО Калкулатор</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-<div class="container">
-    <h1>Ресто Калкулатор (ЕВРО/ЛЕВА)</h1>
-    <label for="due">Дължима сума (ЕВРО):</label>
-    <input type="text" id="due" value="0.00">
 
-    <label for="paid_lev">Платено в ЛЕВА:</label>
-    <input type="text" id="paid_lev" value="0.00">
+<div class="calculator-container">
 
-    <label for="paid_eur">Платено в ЕВРО:</label>
-    <input type="text" id="paid_eur" value="0.00">
+    <!-- Header -->
+    <div class="calculator-header-img">
+        <img src="logo-d-d.jpg" alt="Лого" class="logo">
+    </div>
+    <div class="calculator-header">
+        <h1>ЕВРО КАЛКУЛАТОР</h1>
+    </div>
 
-    <button onclick="calculateChange()">Изчисли ресто</button>
-    <div class="result" id="result">Ресто в ЕВРО: 0.00</div>
+    <!-- Основен калкулатор -->
+    <div class="main-calculator">
+        <label>Дължима сума (ЕВРО):</label>
+        <input type="text" id="input_due" placeholder="0.00">
+
+        <label>Платено в ЛЕВА:</label>
+        <input type="text" id="input_paid_lev" placeholder="0.00">
+
+        <label>Платено в ЕВРО:</label>
+        <input type="text" id="input_paid_eur" placeholder="0.00">
+
+        <button id="btn_calc">Изчисли ресто</button>
+        <div id="label_result" class="result">Ресто в ЕВРО: 0.00</div>
+    </div>
+
+    <!-- Допълнителни калкулатори -->
+    <div class="additional-calculators">
+        <div class="calc-col">
+            <h3>Евро → Лева</h3>
+            <input type="text" id="input_eur_to_lev" placeholder="0.00">
+            <button id="btn_eur_to_lev">Изчисли в лева</button>
+            <div id="result_eur_to_lev" class="result"></div>
+        </div>
+        <div class="calc-col">
+            <h3>Лева → Евро</h3>
+            <input type="text" id="input_lev_to_eur" placeholder="0.00">
+            <button id="btn_lev_to_eur">Изчисли в евро</button>
+            <div id="result_lev_to_eur" class="result"></div>
+        </div>
+    </div>
+
+    <div class="rate-info">
+        <p>Изчислено по официалния курс на Българската народна банка: 1 EUR = 1.95583 BGN</p>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="calculator-footer">
+        <p>© 2025 Профинанс Д и Д ЕООД. Всички права запазени.</p>
+    </div>
+
 </div>
-
 <script src="script.js"></script>
 </body>
 </html>
