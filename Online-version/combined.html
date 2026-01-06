@@ -164,7 +164,7 @@
         <input type="text" id="input_paid_eur" placeholder="0.00">
 
         <button id="btn_calc">Изчисли ресто</button>
-        <div id="label_result" class="result">Ресто в ЕВРО: 0.00</div>
+        <div id="label_result" class="result">Ресто в ЕВРО: 0.00 (0.00 BGN)</div>
     </div>
 
     <!-- Допълнителни калкулатори -->
@@ -209,10 +209,15 @@
         const due = parseAmount(input_due.value);
         const paid_lev = parseAmount(input_paid_lev.value);
         const paid_eur = parseAmount(input_paid_eur.value);
+
         const rate = 1.95583;
+
         const total_paid_eur = paid_eur + (paid_lev / rate);
         const change_eur = total_paid_eur - due;
-        label_result.innerText = `Ресто в ЕВРО: ${change_eur.toFixed(2)}`;
+        const change_lev = change_eur * rate;
+
+        label_result.innerText =
+            `Ресто: ${change_eur.toFixed(2)} EUR (${change_lev.toFixed(2)} BGN)`;
     });
 
     // Евро → Лева
@@ -239,17 +244,17 @@
 
 
     function clearOnFocus(element) {
-    element.addEventListener('focus', function() {
-        if (this.value === '' || this.value === '0.00') {
-            this.value = '';
-        }
-    });
-    element.addEventListener('blur', function() {
-        if (this.value === '') {
-            this.value = '0.00';
-        }
-    });
-}
+        element.addEventListener('focus', function () {
+            if (this.value === '' || this.value === '0.00') {
+                this.value = '';
+            }
+        });
+        element.addEventListener('blur', function () {
+            if (this.value === '') {
+                this.value = '0.00';
+            }
+        });
+    }
 
     clearOnFocus(document.getElementById('input_due'));
     clearOnFocus(document.getElementById('input_paid_lev'));

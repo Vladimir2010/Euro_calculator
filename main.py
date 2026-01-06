@@ -135,13 +135,14 @@ class EuroChangeCalculator(QWidget):
         rate = 1.95583
         total_paid_eur = paid_eur + (paid_lev / rate)
         change_eur = total_paid_eur - due
+        change_lev = change_eur * rate
 
         # Update fields to show normalized format with two decimals
         self.input_due.setText(f"{due:.2f}")
         self.input_paid_lev.setText(f"{paid_lev:.2f}")
         self.input_paid_eur.setText(f"{paid_eur:.2f}")
 
-        self.label_result.setText(f'Ресто в ЕВРО: {change_eur:.2f}')
+        self.label_result.setText(f'Ресто в ЕВРО: {change_eur:.2f} ({change_lev:.2f} BGN)')
 
 
 if __name__ == '__main__':
